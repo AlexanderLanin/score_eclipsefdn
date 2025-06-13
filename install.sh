@@ -130,7 +130,7 @@ else
     ok "All shared libraries satisfied"
 fi
 
-dot --version || fail "Failed to run 'dot --version' command"
+dot -vV || fail "Failed to run 'dot -vV' command"
 
 if ! dot -Tpng -o /dev/null <<< "digraph G { A -> B; }"; then
     fail "Graphviz 'dot' command failed to render a simple graph"

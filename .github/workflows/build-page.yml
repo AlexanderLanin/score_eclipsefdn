@@ -18,3 +18,11 @@ jobs:
     steps:
       - name: Install Graphviz via action
         uses: ts-graphviz/setup-graphviz@v2
+      - name: Verify Graphviz installation
+        run: |
+          dot -vV
+          if ! command -v dot &> /dev/null; then
+            echo "Graphviz installation failed"
+            exit 1
+          fi
+          echo "Graphviz installed successfully"
