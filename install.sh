@@ -130,4 +130,12 @@ else
     ok "All shared libraries satisfied"
 fi
 
+dot --version || fail "Failed to run 'dot --version' command"
+
+if ! dot -Tpng -o /dev/null <<< "digraph G { A -> B; }"; then
+    fail "Graphviz 'dot' command failed to render a simple graph"
+else
+    ok "Graphviz 'dot' command rendered a simple graph successfully"
+fi
+
 ok "Graphviz installation verified successfully 🎉"
