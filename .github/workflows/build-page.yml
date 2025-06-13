@@ -3,11 +3,18 @@ name: Test Graphviz Install
 on: workflow_dispatch # you can trigger it manually from the GitHub UI
 
 jobs:
-  test-graphviz:
-    runs-on: ubuntu-24.04 # or ubuntu-latest if you want
+  deb_install:
+    runs-on: ubuntu-24.04
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
       - name: Run installation script
         run: ./install.sh
+
+  via_action:
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: Install Graphviz via action
+        uses: ts-graphviz/setup-graphviz@v2
