@@ -26,3 +26,52 @@ jobs:
             exit 1
           fi
           echo "Graphviz installed successfully"
+
+  via_apt_install:
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: Install Graphviz via apt
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y graphviz
+      - name: Verify Graphviz installation
+        run: |
+          dot -vV
+          if ! command -v dot &> /dev/null; then
+            echo "Graphviz installation failed"
+            exit 1
+          fi
+          echo "Graphviz installed successfully"
+
+  via_apt_install_without_update:
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: Install Graphviz via apt without update
+        run: |
+          sudo apt-get install -y graphviz
+      - name: Verify Graphviz installation
+        run: |
+          dot -vV
+          if ! command -v dot &> /dev/null; then
+            echo "Graphviz installation failed"
+            exit 1
+          fi
+          echo "Graphviz installed successfully"
+
+  via_apt_install_without_update_and_recommends:
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: Install Graphviz via apt without update and recommends
+        run: |
+          sudo apt-get install --no-install-recommends -y graphviz
+      - name: Verify Graphviz installation
+        run: |
+          dot -vV
+          if ! command -v dot &> /dev/null; then
+            echo "Graphviz installation failed"
+            exit 1
+          fi
+          echo "Graphviz installed successfully"
