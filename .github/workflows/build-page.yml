@@ -28,7 +28,11 @@ jobs:
       - name: Show contents of debs/ folder (debug)
         run: |
           echo "Contents of debs/:"
-          ls -lh debs
+          if [[ -d debs ]]; then
+            ls -lh debs
+          else
+            echo "debs/ does not exist yet (likely first run / cache miss)"
+          fi
 
       - name: Run installation script
         run: ./install.sh
