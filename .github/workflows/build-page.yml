@@ -12,6 +12,27 @@ jobs:
       - name: Run installation script
         run: ./install.sh
 
+  deb_cached:
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Cache Graphviz .deb files
+        uses: actions/cache@v4
+        with:
+          path: debs
+          key: graphviz-debs-${{ runner.os }}-ubuntu-24.04-v1
+
+      - name: Show contents of debs/ folder (debug)
+        run: |
+          echo "Contents of debs/:"
+          ls -lh debs
+
+      - name: Run installation script
+        run: ./install.sh
+
   via_action:
     runs-on: ubuntu-24.04
 
