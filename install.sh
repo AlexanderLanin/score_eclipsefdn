@@ -20,6 +20,7 @@ DEB_FILES=(
     "g/graphviz/libpathplan4_${GRAPHVIZ_VERSION}_amd64.deb"
     "g/gts/libgts-0.7-5t64_0.7.6+darcs121130-5.2build1_amd64.deb"
     "a/ann/libann0_1.1.2+doc-9build1_amd64.deb"
+    "g/graphviz/liblab-gamut1_2.42.2-9ubuntu0.1_amd64.deb"
 )
 
 # -------------
