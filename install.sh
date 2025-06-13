@@ -18,7 +18,7 @@ DEB_FILES=(
     "g/graphviz/libgvpr2_${GRAPHVIZ_VERSION}_amd64.deb"
     "g/graphviz/libcdt5_${GRAPHVIZ_VERSION}_amd64.deb"
     "g/graphviz/libpathplan4_${GRAPHVIZ_VERSION}_amd64.deb"
-    "g/graphviz/libgts-0.7-5_0.7.6-6_amd64.deb"
+    "g/gts/libgts-0.7-5t64_0.7.6-6_amd64.deb"
     "a/ann/libann0_1.1.2+doc-9build1_amd64.deb"
     "x/xaw3d/libxaw7_2%3a1.0.14-1_amd64.deb"
 )
