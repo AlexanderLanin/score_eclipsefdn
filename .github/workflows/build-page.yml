@@ -1,9 +1,9 @@
 name: Test Graphviz Install
 
 on:
-  workflow_dispatch: []
+  workflow_dispatch:
   schedule:
-    - cron: "0 * * * *" # runs hourly
+    - cron: "0,30 * * * *"
 
 jobs:
   deb_install:
