@@ -15,10 +15,54 @@ jobs:
       - name: Run installation script
         run: ./install.sh
 
+  deb_install_no_mandb:
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: Disable man-db triggers
+        run: |
+          sudo dpkg-divert --local --rename --add /usr/bin/mandb
+          sudo ln -s /bin/true /usr/bin/mandb
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Run installation script
+        run: ./install.sh
+  
   deb_cached:
     runs-on: ubuntu-24.04
 
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Cache Graphviz .deb files
+        uses: actions/cache@v4
+        with:
+          path: debs
+          key: graphviz-debs-${{ runner.os }}-ubuntu-24.04-v1
+
+      - name: Show contents of debs/ folder (debug)
+        run: |
+          echo "Contents of debs/:"
+          if [[ -d debs ]]; then
+            ls -lh debs
+          else
+            echo "debs/ does not exist yet (likely first run / cache miss)"
+          fi
+
+      - name: Run installation script
+        run: ./install.sh
+
+  deb_cached_no_mandb:
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: Disable man-db triggers
+        run: |
+          sudo dpkg-divert --local --rename --add /usr/bin/mandb
+          sudo ln -s /bin/true /usr/bin/mandb
+
       - name: Checkout repository
         uses: actions/checkout@v4
 
@@ -55,9 +99,28 @@ jobs:
           fi
           echo "Graphviz installed successfully"
 
-  via_apt_install:
+  via_action_no_mandb:
     runs-on: ubuntu-24.04
 
+    steps:
+      - name: Disable man-db triggers
+        run: |
+          sudo dpkg-divert --local --rename --add /usr/bin/mandb
+          sudo ln -s /bin/true /usr/bin/mandb
+
+      - name: Install Graphviz via action
+        uses: ts-graphviz/setup-graphviz@v2
+      - name: Verify Graphviz installation
+        run: |
+          dot -vV
+          if ! command -v dot &> /dev/null; then
+            echo "Graphviz installation failed"
+            exit 1
+          fi
+          echo "Graphviz installed successfully"
+
+  via_apt_install:
+    runs-on: ubuntu-24.04
     steps:
       - name: Install Graphviz via apt
         run: |
@@ -144,3 +207,25 @@ jobs:
             exit 1
           fi
           echo "Graphviz installed successfully"
+
+
+  via_apt_install_without_update_and_recommends_no_mandb:
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: Disable man-db triggers
+        run: |
+          sudo dpkg-divert --local --rename --add /usr/bin/mandb
+          sudo ln -s /bin/true /usr/bin/mandb
+      - name: Install Graphviz via apt without update and recommends
+        run: |
+          sudo apt-get install --no-install-recommends -y graphviz
+      - name: Verify Graphviz installation
+        run: |
+          dot -vV
+          if ! command -v dot &> /dev/null; then
+            echo "Graphviz installation failed"
+            exit 1
+          fi
+          echo "Graphviz installed successfully"
+        
