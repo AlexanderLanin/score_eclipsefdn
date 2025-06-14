@@ -1,6 +1,9 @@
 name: Test Graphviz Install
 
-on: workflow_dispatch # you can trigger it manually from the GitHub UI
+on:
+  workflow_dispatch: []
+  schedule:
+    - cron: "0 * * * *" # runs hourly
 
 jobs:
   deb_install:
