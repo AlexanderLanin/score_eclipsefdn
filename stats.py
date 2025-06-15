@@ -143,8 +143,8 @@ for _, row in summary.iterrows():
     median: float = row["median"]
     in_30_60 = int(row["in_30_60"])
     over_60s = int(row["over_60s"])
-    emoji_mean = "🟢" if mean <= 20 else "🟡" if mean <= 40 else "🔴"
-    emoji_median = "🟢" if median <= 20 else "🟡" if median <= 40 else "🔴"
+    emoji_mean = "🟢" if mean <= 10 else "🟡" if mean <= 20 else "🔴"
+    emoji_median = "🟢" if median <= 10 else "🟡" if median <= 20 else "🔴"
     print(
         f"| {row['method']} | {emoji_mean} {mean:.1f} | {emoji_median} {median:.1f} | {in_30_60} | {over_60s} |"
     )
