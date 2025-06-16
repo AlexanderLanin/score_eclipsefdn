@@ -30,11 +30,11 @@ def decode_job_name(name: str) -> str:
         raise ValueError(f"Unknown job name format: {name}")
 
     extras = []
-    if "without_update" in name:
+    if "_update" in name:
         extras.append("no apt update")
-    if "without_update_and_recommends" in name:
+    if "_recommends" in name:
         extras.append("no recommends")
-    if name.endswith("no_mandb"):
+    if "_mandb" in name:
         extras.append("no mandb")
 
     return f"{base}, " + ", ".join(extras) if extras else base
@@ -82,9 +82,11 @@ for run in filtered_runs:
     run_id = run["databaseId"]
     cache_file = CACHE_DIR / f"jobs_{run_id}"
     if cache_file.exists():
+        print(f"Using cached data for run {run_id}")
         with cache_file.open("r") as f:
             job_data = json.load(f)
     else:
+        print(f"Fetching jobs for run {run_id}...")
         run_detail = subprocess.run(
             ["gh", "run", "view", str(run_id), "--repo", REPO, "--json", "jobs"],
             stdout=subprocess.PIPE,
