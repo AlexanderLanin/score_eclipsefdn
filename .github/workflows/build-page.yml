@@ -20,7 +20,7 @@ jobs:
 
     steps:
       - name: Disable man-db triggers
-        run: sudo ln -s /bin/true /usr/bin/mandb
+        run: sudo ln -sf /bin/true /usr/bin/mandb
 
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -57,7 +57,7 @@ jobs:
 
     steps:
       - name: Disable man-db triggers
-        run: sudo ln -s /bin/true /usr/bin/mandb
+        run: sudo ln -sf /bin/true /usr/bin/mandb
 
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -100,7 +100,7 @@ jobs:
 
     steps:
       - name: Disable man-db triggers
-        run: sudo ln -s /bin/true /usr/bin/mandb
+        run: sudo ln -sf /bin/true /usr/bin/mandb
 
       - name: Install Graphviz via action
         uses: ts-graphviz/setup-graphviz@v2
@@ -136,7 +136,7 @@ jobs:
 
     steps:
       - name: Disable man-db triggers
-        run: sudo ln -s /bin/true /usr/bin/mandb
+        run: sudo ln -sf /bin/true /usr/bin/mandb
 
       - name: Install Graphviz via action
         uses: ts-graphviz/setup-graphviz@v2
@@ -174,7 +174,7 @@ jobs:
 
     steps:
       - name: Disable man-db triggers
-        run: sudo ln -s /bin/true /usr/bin/mandb
+        run: sudo ln -sf /bin/true /usr/bin/mandb
       - name: Install Graphviz via apt
         run: |
           sudo apt-get update
@@ -209,7 +209,7 @@ jobs:
 
     steps:
       - name: Disable man-db triggers
-        run: sudo ln -s /bin/true /usr/bin/mandb
+        run: sudo ln -sf /bin/true /usr/bin/mandb
       - name: Install Graphviz via apt without update
         run: |
           sudo apt-get install -y graphviz
@@ -244,7 +244,7 @@ jobs:
 
     steps:
       - name: Disable man-db triggers
-        run: sudo ln -s /bin/true /usr/bin/mandb
+        run: sudo ln -sf /bin/true /usr/bin/mandb
       - name: Install Graphviz via apt without update and recommends
         run: |
           sudo apt-get install --no-install-recommends -y graphviz
@@ -278,7 +278,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Disable man-db triggers
-        run: sudo ln -s /bin/true /usr/bin/mandb
+        run: sudo ln -sf /bin/true /usr/bin/mandb
 
       - name: Cache APT Packages
         uses: awalsh128/cache-apt-pkgs-action@v1.4.3

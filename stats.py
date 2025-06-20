@@ -11,7 +11,7 @@ import pandas as pd
 REPO = "AlexanderLanin/score_eclipsefdn"
 WORKFLOW = "build-page.yml"
 LIMIT = "500"
-CUTOFF_TIME = datetime.fromisoformat("2025-06-14T19:10:00+00:00")
+CUTOFF_TIME = datetime.fromisoformat("2025-06-20T22:15:00+00:00")
 CACHE_DIR = Path(".cache")
 CACHE_DIR.mkdir(exist_ok=True)
 
