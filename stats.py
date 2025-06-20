@@ -10,7 +10,7 @@ import pandas as pd
 # --- Settings ---
 REPO = "AlexanderLanin/score_eclipsefdn"
 WORKFLOW = "build-page.yml"
-LIMIT = "50"
+LIMIT = "500"
 CUTOFF_TIME = datetime.fromisoformat("2025-06-14T19:10:00+00:00")
 CACHE_DIR = Path(".cache")
 CACHE_DIR.mkdir(exist_ok=True)
@@ -100,18 +100,28 @@ for run in filtered_runs:
         with cache_file.open("w") as f:
             json.dump(job_data, f)
 
+        time.sleep(0.5)
+
     for job in job_data.get("jobs", []):
         start = job.get("startedAt")
         end = job.get("completedAt")
         if not (start and end):
             continue
-        t_start = datetime.fromisoformat(start.replace("Z", "+00:00"))
-        t_end = datetime.fromisoformat(end.replace("Z", "+00:00"))
-        records.append(
-            {"job_name": job["name"], "duration": (t_end - t_start).total_seconds()}
-        )
 
-    time.sleep(0.5)
+        try:
+            t_start = datetime.fromisoformat(start.replace("Z", "+00:00"))
+            t_end = datetime.fromisoformat(end.replace("Z", "+00:00"))
+            duration = (t_end - t_start).total_seconds()
+            if duration <= 0:
+                raise ValueError("Duration is non-positive")
+        except Exception as e:
+            print(
+                f"⚠️ Skipping job '{job.get('name', 'unknown')}' due to timestamp issue: {e}"
+            )
+            continue
+
+        records.append({"job_name": job["name"], "duration": duration})
+
 
 # --- Step 3: Summarize ---
 if not records:

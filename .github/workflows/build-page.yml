@@ -3,7 +3,7 @@ name: Test Graphviz Install
 on:
   workflow_dispatch:
   schedule:
-    - cron: "0,30 * * * *"
+    - cron: "0,10,20,30,40,50 * * * *"
 
 jobs:
   deb_install:
@@ -20,9 +20,7 @@ jobs:
 
     steps:
       - name: Disable man-db triggers
-        run: |
-          sudo dpkg-divert --local --rename --add /usr/bin/mandb
-          sudo ln -s /bin/true /usr/bin/mandb
+        run: sudo ln -s /bin/true /usr/bin/mandb
 
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -59,9 +57,7 @@ jobs:
 
     steps:
       - name: Disable man-db triggers
-        run: |
-          sudo dpkg-divert --local --rename --add /usr/bin/mandb
-          sudo ln -s /bin/true /usr/bin/mandb
+        run: sudo ln -s /bin/true /usr/bin/mandb
 
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -104,9 +100,7 @@ jobs:
 
     steps:
       - name: Disable man-db triggers
-        run: |
-          sudo dpkg-divert --local --rename --add /usr/bin/mandb
-          sudo ln -s /bin/true /usr/bin/mandb
+        run: sudo ln -s /bin/true /usr/bin/mandb
 
       - name: Install Graphviz via action
         uses: ts-graphviz/setup-graphviz@v2
@@ -142,9 +136,7 @@ jobs:
 
     steps:
       - name: Disable man-db triggers
-        run: |
-          sudo dpkg-divert --local --rename --add /usr/bin/mandb
-          sudo ln -s /bin/true /usr/bin/mandb
+        run: sudo ln -s /bin/true /usr/bin/mandb
 
       - name: Install Graphviz via action
         uses: ts-graphviz/setup-graphviz@v2
@@ -182,9 +174,7 @@ jobs:
 
     steps:
       - name: Disable man-db triggers
-        run: |
-          sudo dpkg-divert --local --rename --add /usr/bin/mandb
-          sudo ln -s /bin/true /usr/bin/mandb
+        run: sudo ln -s /bin/true /usr/bin/mandb
       - name: Install Graphviz via apt
         run: |
           sudo apt-get update
@@ -219,9 +209,7 @@ jobs:
 
     steps:
       - name: Disable man-db triggers
-        run: |
-          sudo dpkg-divert --local --rename --add /usr/bin/mandb
-          sudo ln -s /bin/true /usr/bin/mandb
+        run: sudo ln -s /bin/true /usr/bin/mandb
       - name: Install Graphviz via apt without update
         run: |
           sudo apt-get install -y graphviz
@@ -256,9 +244,7 @@ jobs:
 
     steps:
       - name: Disable man-db triggers
-        run: |
-          sudo dpkg-divert --local --rename --add /usr/bin/mandb
-          sudo ln -s /bin/true /usr/bin/mandb
+        run: sudo ln -s /bin/true /usr/bin/mandb
       - name: Install Graphviz via apt without update and recommends
         run: |
           sudo apt-get install --no-install-recommends -y graphviz
@@ -270,4 +256,32 @@ jobs:
             exit 1
           fi
           echo "Graphviz installed successfully"
-        
+
+  via_cache_apt_pkgs_action:
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Cache APT Packages
+        uses: awalsh128/cache-apt-pkgs-action@v1.4.3
+        with:
+          packages: graphviz
+
+
+  via_cache_apt_pkgs_action_no_mandb:
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Disable man-db triggers
+        run: sudo ln -s /bin/true /usr/bin/mandb
+
+      - name: Cache APT Packages
+        uses: awalsh128/cache-apt-pkgs-action@v1.4.3
+        with:
+          packages: graphviz
+
