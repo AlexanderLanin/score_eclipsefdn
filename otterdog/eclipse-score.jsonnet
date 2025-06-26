@@ -696,6 +696,10 @@ orgs.newOrg('automotive.score', 'eclipse-score') {
       description: "GitHub Action to execute apt-install in a clever way",
     },
 
+    newInfrastructureTeamRepo('devcontainer') {
+      description: "Common Devcontainer for Eclipse S-CORE",
+    },
+
     orgs.newRepo('testing_tools') {
       allow_merge_commit: true,
       allow_update_branch: false,
